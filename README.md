@@ -9,6 +9,9 @@ It can currently display pages :
 - `http://localhost:8080/index.html`
 - `http://localhost:8080/foo/bar.html`
 
+Adapted from : https://www2.seas.gwu.edu/~cheng/6431/Projects/Project1WebServer/webserver.html
+
+
 ## Classes
 
 - **WebServer** : Reads all the files and loads them in a map (filename, filecontent). Launches the Thread Pool and the server socket (listening on port 8080). Accepts connections and submits HttpRequests to the pool.
@@ -26,4 +29,3 @@ It can currently display pages :
 `java WebServer`
 
 Shutting down with Ctrl+C
-
