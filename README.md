@@ -25,7 +25,9 @@ Adapted from : https://www2.seas.gwu.edu/~cheng/6431/Projects/Project1WebServer/
 
 ## TODO :
 Better error handling
+
 Use a building tool
+
 Add tests
 
 ## Status:
