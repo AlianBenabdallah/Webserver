@@ -23,6 +23,13 @@ Adapted from : https://www2.seas.gwu.edu/~cheng/6431/Projects/Project1WebServer/
 
 `javac *.java`
 
+## Usage
+`cd ./src`
+
+`java WebServer`
+
+Shutting down with Ctrl+C
+
 ## TODO :
 Better error handling
 
@@ -32,10 +39,3 @@ Add tests
 
 ## Status:
 On hold, I had only 3 hours to spend on this.
-
-## Usage
-`cd ./src`
-
-`java WebServer`
-
-Shutting down with Ctrl+C
