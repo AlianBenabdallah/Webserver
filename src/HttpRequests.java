@@ -49,6 +49,7 @@ public class HttpRequests implements Runnable{
     private void processRequest() throws Exception{
         if (socket != null){
             boolean keep_alive = true;                                  // default in HTTP/1.1 is keep-alive
+
             while (keep_alive) {
 
                 String error_message = "";
@@ -72,6 +73,9 @@ public class HttpRequests implements Runnable{
                     try {
                         sendResponse(PATH_URI, error_message);
                     } catch (Exception e){
+                        br.close();
+                        os.close();
+                        socket.close();
                         throw e;
                     }
                     this.cpt++;
@@ -194,7 +198,6 @@ public class HttpRequests implements Runnable{
     private void sendResponse(String path_uri, String error_message) throws Exception{
 
         // Construct the response message.
-
         String status_line = "";
         String content_type_line = "Content-type: text/html"+ CRLF;
         String content_length_line = "Content-length: ";
