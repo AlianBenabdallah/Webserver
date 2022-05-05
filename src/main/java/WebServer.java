@@ -40,18 +40,21 @@ public class WebServer {
         ThreadPoolExecutor executor = (ThreadPoolExecutor) Executors.newFixedThreadPool(NB_THREADS);     // Thread Pool
         ServerSocket serverSocket = new ServerSocket(port);
         HashMap<String, byte[]> resource_map = new HashMap<String, byte[]>();                            // Every file that the server can send
-        loadFiles("../pages", resource_map);                                                         // Loading those files
+        loadFiles("./pages", resource_map);                                                         // Loading those files
         boolean running = true;
 
+
         Runtime.getRuntime().addShutdownHook(new Thread() {
-            // Adapted from https://docs.oracle.com/javase/7/docs/api/java/util/concurrent/ExecutorService.html
             public void run() {
-                // Taken from https://docs.oracle.com/javase/7/docs/api/java/util/concurrent/ExecutorService.html
                 executor.shutdown();
                 try {
-                    System.out.println("Closing server socket");
-                    serverSocket.close();
-                } catch (Exception e){}
+                    if (!serverSocket.isClosed()){
+                        System.out.println("Closing server socket");
+                        serverSocket.close();
+                    }
+                } catch (Exception e){
+                    System.err.println("An error has occured when closing the server socket");
+                }
 
                 try {
                     System.out.println("Closing threads and shutting down connections.");
@@ -60,23 +63,29 @@ public class WebServer {
                         List<Runnable> droppedTasks = executor.shutdownNow();
                         System.err.println("Executor was abruptly shut down. " + droppedTasks.size() + " tasks will not be executed.");
                     }
-                } catch (Exception e){
+                } catch (InterruptedException e){
                     System.err.println("Current thread is also interrupted");
                     executor.shutdownNow();
+                } catch (Exception e){
+                    System.err.println(e);
+                } finally {
+                    System.out.println("Exiting");
+
                 }
             }
         });
+        boolean loop = true;
 
-        while(true){
+        while(loop){
             try {
                 Socket socket = serverSocket.accept();
                 System.out.println("Connection accepted");
-                HttpRequests request = new HttpRequests(socket, resource_map);
-                executor.execute(request);
-            } catch (SocketException e){
-                // Shutting down the application closes the socket
+                executor.execute(new HttpRequests(socket, resource_map));
+            } catch (Exception e){
+                System.err.println("Error : " + e.getMessage());
+                loop = false;
             }
-        }
 
+        }
     }
 }
