@@ -1,8 +1,8 @@
 # Webserver
 
-A multi-threaded file-based web server with thread-pooling implemented in Java which supports Keep-Alive connections.
+A minimalist multi-threaded file-based web server with thread-pooling implemented in Java which supports Keep-Alive connections implemented with the socket library. It supports only `GET` requests.
 
-The server can deliver any `.html` file in the `../pages` directiory which is inside the folder when the server starts.
+The server can deliver any `.html` file in the `../pages` directiory which is inside the folder when the server starts. 
 
 It can currently display pages :
 - `http://localhost:8080/`
